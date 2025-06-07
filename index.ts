@@ -4,14 +4,13 @@ import httpProxy from 'http-proxy'
 const gatewayPort = process.env.PORT || 5000
 
 const services = {
-  '/auth': 5001
+  '/auth': 5001,
+  '/units': 5002,
 }
 
 const proxy = httpProxy.createProxyServer({});
 
 http.createServer((req, res) => {
-  console.log(`Request: ${req.url}`)
-  
   try {
     let proxied = false
     
@@ -33,4 +32,4 @@ http.createServer((req, res) => {
   }
 }).listen(process.env.PORT as unknown as number || 5000)
 
-console.log(`Gateway running at http://localhost:${gatewayPort}`)
+console.log(`API Gateway running at http://localhost:${gatewayPort}`)
