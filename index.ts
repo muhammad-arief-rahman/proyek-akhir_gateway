@@ -7,6 +7,8 @@ const services = {
   '/auth': 5001,
   '/units': 5002,
   '/customers': 5003,
+  '/maintenance': 5004,
+  '/aggregator': 5100,
 }
 
 const proxy = httpProxy.createProxyServer({});
@@ -16,6 +18,7 @@ http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
   
   try {
     let proxied = false
@@ -24,6 +27,7 @@ http.createServer((req, res) => {
       if (req.url?.startsWith(path)) {
         proxied = true
         req.url = req.url.slice(path.length)
+
         proxy.web(req, res, { target: `${process.env.SERVICE_URL}:${port}` })
       }
     })
