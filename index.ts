@@ -9,9 +9,14 @@ const services = {
   '/customers': 5003,
   '/maintenance': 5004,
   '/aggregator': 5100,
+  '/media': 5200,
 }
 
-const proxy = httpProxy.createProxyServer({});
+const proxy = httpProxy.createProxyServer({
+  
+  secure: false,
+  selfHandleResponse: false
+});
 
 http.createServer((req, res) => {
   // Set CORS headers
